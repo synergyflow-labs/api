@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Checking backend formatting..."
+dotnet format SynergyFlow.slnx --verify-no-changes

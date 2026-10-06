@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore SynergyFlow.slnx
+
+      - name: Check formatting
+        run: dotnet format SynergyFlow.slnx --verify-no-changes
+
+      - name: Build
+        run: dotnet build SynergyFlow.slnx --no-restore --configuration Release
+
+      - name: Test with Coverage
+        run: >
+          dotnet test SynergyFlow.slnx
+          --no-build
+          --configuration Release
+          --collect:"XPlat Code Coverage"
+          --settings coverlet.runsettings
+          --results-directory ./TestResults
+
+      - name: Generate Coverage Report
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
+        with:
+          reports: "TestResults/**/coverage.cobertura.xml"
+          targetdir: "TestResults/CoverageReport"
+          reporttypes: "Cobertura;MarkdownSummaryGithub"
+          title: "Backend Coverage"
+
+      - name: Publish Coverage to GitHub Step Summary
+        run: cat TestResults/CoverageReport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,32 @@
+## Visual Studio / .NET Core
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.idea/
+.vscode/
+
+## Test Results & Coverage
+TestResults/
+[Tt]est[Rr]esult*/
+coverage/
+*.cobertura.xml
+*.coverage
+*.coveragexml
+
+## Docker
+.env
+!.env.example
+
+## OS Generated
+.DS_Store
+Thumbs.db
+
+## Rider / JetBrains
+*.DotSettings.user
+.idea/

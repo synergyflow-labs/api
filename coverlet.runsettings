@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Exclude>
+            [*]SynergyFlow.*Tests*,
+            [*]SynergyFlow.Tests.Common*,
+            [*]SynergyFlow.Infrastructure.Data.Migrations.*,
+            [*]Program,
+            [*]*.Program
+          </Exclude>
+          <ExcludeByAttribute>
+            Obsolete,
+            GeneratedCodeAttribute,
+            CompilerGeneratedAttribute
+          </ExcludeByAttribute>
+          <ExcludeByFile>
+            **/Migrations/*,
+            **/Migrations/**/*
+          </ExcludeByFile>
+          <SingleHit>false</SingleHit>
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

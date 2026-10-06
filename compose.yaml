@@ -1,0 +1,89 @@
+services:
+  db:
+    image: postgres:18.3
+    container_name: synergyflow-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-synergyflow_dev}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-synergyflow_dev}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - backend
+
+  api:
+    build:
+      context: .
+      dockerfile: src/SynergyFlow.Api/Dockerfile
+    container_name: synergyflow-api
+    restart: unless-stopped
+    stop_grace_period: 35s
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      PostgresSettings__DefaultConnection: Host=db;Port=5432;Database=${POSTGRES_DB:-synergyflow_dev};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-postgres}
+      JwtSettings__Issuer: SynergyFlow.Api
+      JwtSettings__Audiences__0: SynergyFlow.Client
+      JwtSettings__Secret: ${JWT_SECRET:-SynergyFlow-SuperSecret-Development-Key-Minimum-32-Characters-Long!}
+      JwtSettings__ExpiryMinutes: 15
+      JwtSettings__RefreshTokenExpirationDays: 7
+      CorsSettings__PolicyName: "SynergyFlowCorsPolicy"
+      CorsSettings__AllowedOrigins__0: "http://localhost:3000"
+      RateLimiterSettings__DisableRateLimiting: "false"
+      Serilog__WriteTo__1__Args__serverUrl: "http://seq:5341"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://seq:5341/ingest/otlp
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
+  seq:
+    image: datalust/seq:latest
+    container_name: synergyflow-seq
+    volumes:
+      - seq_data:/data
+    environment:
+      ACCEPT_EULA: Y
+      SEQ_FIRSTRUN_NOAUTHENTICATION: "true"
+    ports:
+      - "5341:5341"
+      - "8081:80"
+    networks:
+      - backend
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: synergyflow-grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - backend
+
+volumes:
+  postgres_data:
+  seq_data:
+  grafana_data:
+
+networks:
+  backend:
+    driver: bridge

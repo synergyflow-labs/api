@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SynergyFlow.Domain\SynergyFlow.Domain.csproj" />
+    <ProjectReference Include="..\..\src\SynergyFlow.Application\SynergyFlow.Application.csproj" />
+    <ProjectReference Include="..\..\src\SynergyFlow.Infrastructure\SynergyFlow.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,126 @@
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{sln,slnx,csproj,props,targets}]
+indent_size = 2
+
+[*.cs]
+indent_size = 4
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+csharp_new_line_before_open_brace = all
+csharp_preserve_single_line_blocks = true
+csharp_preserve_single_line_statements = false
+max_line_length = 140
+
+# SA1200: Allow using directives outside of namespace
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1600: Disable mandatory XML documentation for all public elements
+dotnet_diagnostic.SA1600.severity = none
+
+# SA1309: Allow fields to begin with an underscore
+dotnet_diagnostic.SA1309.severity = none
+
+# SA1101: Don't force 'this.' prefix for local members
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1402: Allow multiple types in a single file
+dotnet_diagnostic.SA1402.severity = none
+
+# SA1201: A record struct can follow a class
+dotnet_diagnostic.SA1201.severity = none
+
+# SA0001: Disable XML comment analysis warning
+dotnet_diagnostic.SA0001.severity = none
+
+# SA1633: File should have XML documentation at the top
+dotnet_diagnostic.SA1633.severity = none
+
+# SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = none
+
+# SA1602: Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = none
+
+# SA1518: File not required to end with a single newline character
+dotnet_diagnostic.SA1518.severity = none
+
+# SA1313: Allow field names to begin with a lowercase letter
+dotnet_diagnostic.SA1313.severity = none
+
+# SA1009: Closing parenthesis should not be followed by a space
+dotnet_diagnostic.SA1009.severity = none
+
+# SA1106: Code should not contain empty statements
+dotnet_diagnostic.SA1106.severity = none
+
+# IDE0005: Remove unnecessary usings
+dotnet_diagnostic.IDE0005.severity = error
+
+# CS8618: Non-nullable field must contain a non-null value when exiting constructor
+dotnet_diagnostic.CS8618.severity = none
+
+# SA1010: Opening square brackets should not be preceded by a space (Conflicts with C# 12 [])
+dotnet_diagnostic.SA1010.severity = none
+
+# SA1028: Code should not contain trailing whitespace
+dotnet_diagnostic.SA1028.severity = none
+
+# CS0108: Allow member to hide inherited member without using the 'new' keyword
+dotnet_diagnostic.CS0108.severity = none
+
+# SA1118: Allow method or indexer parameters to span multiple lines
+dotnet_diagnostic.SA1118.severity = none
+
+# SA1206: Allow flexible modifier ordering
+dotnet_diagnostic.SA1206.severity = none
+
+# SA1116: Parameters must begin on same line or separate lines
+dotnet_diagnostic.SA1116.severity = none
+
+# SA1117: Parameters must begin on same line or separate lines
+dotnet_diagnostic.SA1117.severity = none
+
+# SA1000: Allow keywords to be spaced flexibly (for C# 9+ target-typed new)
+dotnet_diagnostic.SA1000.severity = none
+
+# SA1001: Allow commas to be spaced flexibly
+dotnet_diagnostic.SA1001.severity = none
+
+# SA1003: Allow symbols and operators to be spaced flexibly
+dotnet_diagnostic.SA1003.severity = none
+
+# SA1008: Allow opening parenthesis to be spaced flexibly
+dotnet_diagnostic.SA1008.severity = none
+
+# SA1210: Using directives should be ordered alphabetically
+dotnet_diagnostic.SA1210.severity = none
+
+# SA1500: Allow curly brackets for multi-line statements to share a line
+dotnet_diagnostic.SA1500.severity = none
+
+# SA1502: Allow elements to be declared on a single line
+dotnet_diagnostic.SA1502.severity = none
+
+# SA1508: Allow closing curly brackets to be preceded by a blank line
+dotnet_diagnostic.SA1508.severity = none
+
+# SA1516: Allow adjacent elements to be declared without an intervening blank line
+dotnet_diagnostic.SA1516.severity = none
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+[**Migrations/*.cs]
+generated_code = true
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.IDE0005.severity = none
